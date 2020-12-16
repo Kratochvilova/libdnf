@@ -21,6 +21,8 @@ along with libdnf.  If not, see <https://www.gnu.org/licenses/>.
 #ifndef LIBDNF_COMPS_GROUP_PACKAGE_HPP
 #define LIBDNF_COMPS_GROUP_PACKAGE_HPP
 
+
+/*
 #include <string>
 
 
@@ -57,8 +59,8 @@ private:
 }  // namespace libdnf::comps
 
 
-/*
-dnf:dnf/comps.py:attribute:Package.option_type
+
+//dnf:dnf/comps.py:attribute:Package.option_type
 */
 
 #endif

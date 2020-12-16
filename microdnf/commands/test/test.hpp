@@ -19,7 +19,7 @@ along with microdnf.  If not, see <https://www.gnu.org/licenses/>.
 
 #ifndef MICRODNF_COMMANDS_TEST_TEST_HPP
 #define MICRODNF_COMMANDS_TEST_TEST_HPP
-
+/*
 #include "../command.hpp"
 
 
@@ -32,5 +32,5 @@ public:
 };
 
 }  // namespace microdnf
-
+*/
 #endif

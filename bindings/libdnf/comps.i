@@ -22,9 +22,13 @@
 
 #define CV __perl_CV
 
-%template(GroupWeakPtr) libdnf::WeakPtr<Group, false>;
-%template(GroupWeakPtrSet) libdnf::Set<libdnf::comps::GroupWeakPtr>;
-%template(GroupWeakPtrQuery) libdnf::sack::Query<libdnf::comps::GroupWeakPtr>;
+%template(SackQueryGroup) libdnf::sack::Query<libdnf::comps::Group>;
+
+%template(SackQueryGroupWeakPtr) libdnf::WeakPtr<GroupQuery, false>;
+%template(SackQueryGroupWeakPtrSet) libdnf::Set<libdnf::comps::GroupQueryWeakPtr>;
+
+%template(SackGroupGroupQueryWeakPtr) libdnf::WeakPtr<GroupSack, false>;
+%template(SackGroupGroupQueryWeakPtrSet) libdnf::Set<libdnf::comps::GroupSackWeakPtr>;
 
 %include "libdnf/comps/comps.hpp"
 %include "libdnf/comps/group/group.hpp"

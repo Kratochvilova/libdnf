@@ -21,12 +21,8 @@ along with libdnf.  If not, see <https://www.gnu.org/licenses/>.
 #ifndef LIBDNF_COMPS_GROUP_SACK_HPP
 #define LIBDNF_COMPS_GROUP_SACK_HPP
 
-
-#include "group.hpp"
-#include "query.hpp"
-
 #include "libdnf/common/sack/sack.hpp"
-#include "libdnf/comps/comps.hpp"
+#include "libdnf/utils/weak_ptr.hpp"
 
 #include <memory>
 
@@ -36,26 +32,38 @@ namespace libdnf::comps {
 
 class Comps;
 
+class Group;
+
+class GroupQuery;
+
+class GroupSack;
+using GroupSackWeakPtr = WeakPtr<GroupSack, false>;
+
 
 class GroupSack : public libdnf::sack::Sack<Group, GroupQuery> {
 public:
-    explicit GroupSack(Comps & comps) : comps(&comps) {}
-
-    /// Create a new Group and store in in the GroupSack
-    GroupWeakPtr new_group();
+    ~GroupSack();
+//    GroupQuery new_query();
 
     /// Move an existing Group object to the GroupSack
-    void add_group(std::unique_ptr<Group> && group) { add_item(std::move(group)); }
+//    void add_group(std::unique_ptr<Group> && group);
+
+    /// Create WeakPtr to GroupSack
+    GroupSackWeakPtr get_weak_ptr();
+
+protected:
+    explicit GroupSack(Comps & comps);
 
 private:
-    Comps * comps;
+    Comps & comps;
+
+    class Impl;
+    std::unique_ptr<Impl> p_impl;
+
+    friend Comps;
+    friend GroupQuery;
+    friend Group;
 };
-
-
-inline GroupWeakPtr GroupSack::new_group() {
-    auto group = std::make_unique<Group>();
-    return add_item_with_return(std::move(group));
-}
 
 
 }  // namespace libdnf::comps

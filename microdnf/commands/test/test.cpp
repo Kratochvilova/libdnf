@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with microdnf.  If not, see <https://www.gnu.org/licenses/>.
 */
-
+/*
 #include "test.hpp"
 
 #include "../../context.hpp"
@@ -134,3 +134,4 @@ void CmdTest::run([[maybe_unused]] Context & ctx) {
 }
 
 }  // namespace microdnf
+*/

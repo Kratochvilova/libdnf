@@ -25,43 +25,61 @@ along with libdnf.  If not, see <https://www.gnu.org/licenses/>.
 #include "libdnf/comps/group/group.hpp"
 #include "libdnf/utils/weak_ptr.hpp"
 
+#include <memory>
 
 namespace libdnf::comps {
 
 
-/// Weak pointer to rpm repository. RepoWeakPtr does not own the repository (ptr_owner = false).
-/// Repositories are owned by RepoSack.
-using GroupWeakPtr = libdnf::WeakPtr<Group, false>;
+class GroupQuery;
+using GroupQueryWeakPtr = WeakPtr<GroupQuery, false>;
+
+class GroupSack;
+using GroupSackWeakPtr = WeakPtr<GroupSack, false>;
 
 
-class GroupQuery : public libdnf::sack::Query<GroupWeakPtr> {
+class GroupQuery : public libdnf::sack::Query<Group> {
 public:
-    using libdnf::sack::Query<GroupWeakPtr>::Query;
+    ~GroupQuery();
 
-    GroupQuery & ifilter_id(sack::QueryCmp cmp, const std::string & pattern);
-    GroupQuery & ifilter_id(sack::QueryCmp cmp, const std::vector<std::string> & patterns);
+    GroupQuery & ifilter_groupid(sack::QueryCmp cmp, const std::string & pattern);
+    GroupQuery & ifilter_groupid(sack::QueryCmp cmp, const std::vector<std::string> & patterns);
     GroupQuery & ifilter_uservisible(bool value);
     GroupQuery & ifilter_default(bool value);
     GroupQuery & ifilter_installed(bool value);
 
+    /// Create WeakPtr to GroupQuery
+    GroupQueryWeakPtr get_weak_ptr();
+
+protected:
+    explicit GroupQuery(GroupSack * sack);
+    explicit GroupQuery(const Set<Group> & src_set, GroupSack * sack);
+    explicit GroupQuery(Set<Group> && src_set, GroupSack * sack);
+
 private:
     struct F {
-        static std::string id(const GroupWeakPtr & obj) { return obj->get_id(); }
-        static bool is_uservisible(const GroupWeakPtr & obj) { return obj->get_uservisible(); }
-        static bool is_default(const GroupWeakPtr & obj) { return obj->get_default(); }
-        static bool is_installed(const GroupWeakPtr & obj) { return obj->get_installed(); }
+        static std::string groupid(const Group & obj) { return obj.get_groupid(); }
+        static bool is_uservisible(const Group & obj) { return obj.get_uservisible(); }
+        static bool is_default(const Group & obj) { return obj.get_default(); }
+        static bool is_installed(const Group & obj) { return obj.get_installed(); }
     };
+
+    GroupSackWeakPtr sack;
+
+    class Impl;
+    std::unique_ptr<Impl> p_impl;
+
+    friend Group;
 };
 
 
-inline GroupQuery & GroupQuery::ifilter_id(sack::QueryCmp cmp, const std::string & pattern) {
-    ifilter(F::id, cmp, pattern);
+inline GroupQuery & GroupQuery::ifilter_groupid(sack::QueryCmp cmp, const std::string & pattern) {
+    ifilter(F::groupid, cmp, pattern);
     return *this;
 }
 
 
-inline GroupQuery & GroupQuery::ifilter_id(sack::QueryCmp cmp, const std::vector<std::string> & patterns) {
-    ifilter(F::id, cmp, patterns);
+inline GroupQuery & GroupQuery::ifilter_groupid(sack::QueryCmp cmp, const std::vector<std::string> & patterns) {
+    ifilter(F::groupid, cmp, patterns);
     return *this;
 }
 
@@ -85,6 +103,5 @@ inline GroupQuery & GroupQuery::ifilter_installed(bool value) {
 
 
 }  // namespace libdnf::comps
-
 
 #endif  // LIBDNF_COMPS_GROUP_QUERY_HPP

@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with libdnf.  If not, see <https://www.gnu.org/licenses/>.
 
-
+"""
 import os
 import unittest
 
@@ -30,3 +30,4 @@ class TestGroup(unittest.TestCase):
         # TODO(dmach): get_group_sack() returns generic SwigPyObject that has no new_query attribute
         #q_core = comps.get_group_sack().new_query()
         #core = q_core.get()
+"""

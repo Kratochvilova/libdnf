@@ -20,7 +20,7 @@ along with libdnf.  If not, see <https://www.gnu.org/licenses/>.
 
 #ifndef LIBDNF_COMPS_GROUP_GROUP_PRIVATE_HPP
 #define LIBDNF_COMPS_GROUP_GROUP_PRIVATE_HPP
-
+/*
 
 #include <libdnf/comps/group/group.hpp>
 #include <libxml/tree.h>
@@ -28,14 +28,13 @@ along with libdnf.  If not, see <https://www.gnu.org/licenses/>.
 extern "C" {
 #include <solv/pool.h>
 }
-
+*/
 namespace libdnf::comps {
 
 
-void load_group_from_solvable(Group & grp, Id solvable_id, Pool * pool);
+//void load_group_from_solvable(Group & grp, Id solvable_id, Pool * pool);
 
 
 }  // namespace libdnf::comps
-
 
 #endif  // LIBDNF_COMPS_GROUP_GROUP_PRIVATE_HPP

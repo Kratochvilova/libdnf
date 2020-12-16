@@ -18,32 +18,27 @@ along with libdnf.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 
-#ifndef LIBDNF_TEST_COMPS_GROUP_HPP
-#define LIBDNF_TEST_COMPS_GROUP_HPP
-/*
+#ifndef LIBDNF_COMPS_GROUP_SACK_IMPL_HPP
+#define LIBDNF_COMPS_GROUP_SACK_IMPL_HPP
 
-#include <cppunit/TestCase.h>
-#include <cppunit/extensions/HelperMacros.h>
+#include "libdnf/comps/group/sack.hpp"
+
+namespace libdnf::comps {
 
 
-class CompsGroupTest : public CppUnit::TestCase {
-    CPPUNIT_TEST_SUITE(CompsGroupTest);
-    CPPUNIT_TEST(test_load);
-    CPPUNIT_TEST(test_load_defaults);
-    CPPUNIT_TEST(test_merge);
-    CPPUNIT_TEST(test_merge_with_empty);
-    CPPUNIT_TEST(test_merge_empty_with_nonempty);
-    CPPUNIT_TEST_SUITE_END();
-
+class GroupSack::Impl {
 public:
-    void setUp() override;
-    void tearDown() override;
+    explicit Impl();
+    ~Impl();
 
-    void test_load();
-    void test_load_defaults();
-    void test_merge();
-    void test_merge_with_empty();
-    void test_merge_empty_with_nonempty();
+private:
+    WeakPtrGuard<GroupSack, false> data_guard;
+
+    friend GroupSack;
 };
-*/
-#endif
+
+
+}  // namespace libdnf::comps
+
+
+#endif  // LIBDNF_COMPS_GROUP_SACK_IMPL_HPP

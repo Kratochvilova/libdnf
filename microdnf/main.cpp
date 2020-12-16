@@ -155,7 +155,7 @@ int main(int argc, char * argv[]) {
     context.commands.push_back(std::make_unique<microdnf::CmdRemove>());
     context.commands.push_back(std::make_unique<microdnf::CmdRepolist>());
     context.commands.push_back(std::make_unique<microdnf::CmdRepoquery>());
-    context.commands.push_back(std::make_unique<microdnf::CmdTest>());
+    //context.commands.push_back(std::make_unique<microdnf::CmdTest>());
     context.commands.push_back(std::make_unique<microdnf::CmdUpgrade>());
 
     // Parse command line arguments
