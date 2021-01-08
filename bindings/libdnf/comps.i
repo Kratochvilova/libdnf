@@ -27,6 +27,8 @@
 %template(SackQueryGroupWeakPtr) libdnf::WeakPtr<GroupQuery, false>;
 %template(SackQueryGroupWeakPtrSet) libdnf::Set<libdnf::comps::GroupQueryWeakPtr>;
 
+%template(SackGroupGroupQuery) libdnf::sack::Sack<libdnf::comps::Group, libdnf::comps::GroupQuery>;
+
 %template(SackGroupGroupQueryWeakPtr) libdnf::WeakPtr<GroupSack, false>;
 %template(SackGroupGroupQueryWeakPtrSet) libdnf::Set<libdnf::comps::GroupSackWeakPtr>;
 
