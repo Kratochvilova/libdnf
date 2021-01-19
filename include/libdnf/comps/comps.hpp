@@ -43,8 +43,8 @@ public:
     ~Comps();
 
     // TODO(dmach): load to a new Comps object and merge when it's fully loaded for better transactional behavior
-//    void load_from_file(const std::string & path, Repo * repo);
 //    void load_installed();
+    void load_from_file(const std::string & path, const char * reponame);
     GroupSack & get_group_sack() { return group_sack; }
 
 private:

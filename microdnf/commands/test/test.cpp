@@ -16,7 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with microdnf.  If not, see <https://www.gnu.org/licenses/>.
 */
-/*
+
 #include "test.hpp"
 
 #include "../../context.hpp"
@@ -64,8 +64,21 @@ void CmdTest::set_argument_parser(Context & ctx) {
 
 void CmdTest::run([[maybe_unused]] Context & ctx) {
     std::filesystem::path data_path = PROJECT_SOURCE_DIR "/test/libdnf/comps/data/";
+    const char * reponame = "repo";
+    std::unique_ptr<libdnf::Base> base = std::make_unique<libdnf::Base>();
+    libdnf::comps::Comps comps(*base.get());
+    comps.load_from_file(data_path / "core.xml", reponame);
+    auto q_core = comps.get_group_sack().new_query();
+    auto groups = q_core.list();
 
-    libdnf::comps::Comps comps;
+    for (auto group : groups) {
+        std::cout << "QUERY:" << std::endl;
+        q_core.foo();
+        std::cout << "GROUP:" << std::endl;
+        std::cout << group.foo() << std::endl;
+        std::cout << "END" << std::endl;
+    }
+    /*
     Pool * pool = comps.get_pool();
     const char *langs[] = {"ja"};
     pool_set_languages(pool, langs, sizeof(langs)/sizeof(*langs));
@@ -130,8 +143,8 @@ void CmdTest::run([[maybe_unused]] Context & ctx) {
             }
         }
         std::cout << std::endl;
-    }
+    }*/
 }
 
 }  // namespace microdnf
-*/
+

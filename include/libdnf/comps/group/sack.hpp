@@ -43,7 +43,8 @@ using GroupSackWeakPtr = WeakPtr<GroupSack, false>;
 class GroupSack : public libdnf::sack::Sack<Group, GroupQuery> {
 public:
     ~GroupSack();
-//    GroupQuery new_query();
+
+    GroupQuery new_query();
 
     /// Move an existing Group object to the GroupSack
 //    void add_group(std::unique_ptr<Group> && group);

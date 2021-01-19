@@ -13,26 +13,25 @@
 #endif
 
 %{
-    #include "libdnf/comps/comps.hpp"
     #include "libdnf/comps/group/group.hpp"
     #include "libdnf/comps/group/query.hpp"
     #include "libdnf/comps/group/sack.hpp"
-    using namespace libdnf::comps;
+    #include "libdnf/comps/comps.hpp"
 %}
 
 #define CV __perl_CV
 
-%template(SackQueryGroup) libdnf::sack::Query<libdnf::comps::Group>;
+// %template(SackQueryGroup) libdnf::sack::Query<libdnf::comps::Group>;
 
-%template(SackQueryGroupWeakPtr) libdnf::WeakPtr<GroupQuery, false>;
-%template(SackQueryGroupWeakPtrSet) libdnf::Set<libdnf::comps::GroupQueryWeakPtr>;
+// %template(SackQueryGroupWeakPtr) libdnf::WeakPtr<GroupQuery, false>;
+// %template(SackQueryGroupWeakPtrSet) libdnf::Set<libdnf::comps::GroupQueryWeakPtr>;
 
-%template(SackGroupGroupQuery) libdnf::sack::Sack<libdnf::comps::Group, libdnf::comps::GroupQuery>;
+// %template(SackGroupGroupQuery) libdnf::sack::Sack<libdnf::comps::Group, libdnf::comps::GroupQuery>;
 
-%template(SackGroupGroupQueryWeakPtr) libdnf::WeakPtr<GroupSack, false>;
-%template(SackGroupGroupQueryWeakPtrSet) libdnf::Set<libdnf::comps::GroupSackWeakPtr>;
+// %template(SackGroupGroupQueryWeakPtr) libdnf::WeakPtr<GroupSack, false>;
+// %template(SackGroupGroupQueryWeakPtrSet) libdnf::Set<libdnf::comps::GroupSackWeakPtr>;
 
-%include "libdnf/comps/comps.hpp"
 %include "libdnf/comps/group/group.hpp"
 %include "libdnf/comps/group/query.hpp"
 %include "libdnf/comps/group/sack.hpp"
+%include "libdnf/comps/comps.hpp"

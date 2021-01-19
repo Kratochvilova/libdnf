@@ -58,6 +58,8 @@ public:
     const std::vector<GroupId> & get_group_ids() const { return group_ids; }
     void add_group_id(GroupId group_id) { group_ids.push_back(group_id); }
 
+    std::string foo() const;
+
     /// Get group id
     std::string get_groupid() const;
 
@@ -111,6 +113,8 @@ public:
     /// Merge a comps Group with another one
     Group & operator+=(const Group & rhs);
 
+    bool operator<(const Group & rhs) const { return this->get_groupid() < rhs.get_groupid(); };
+
 protected:
     explicit Group(GroupQuery * query);
 
@@ -118,6 +122,9 @@ private:
     GroupQueryWeakPtr query;
 
     std::vector<GroupId> group_ids;
+
+    friend class GroupSack;
+    friend class GroupQuery;
 };
 
 

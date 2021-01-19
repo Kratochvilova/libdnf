@@ -39,8 +39,9 @@ using GroupSackWeakPtr = WeakPtr<GroupSack, false>;
 
 class GroupQuery : public libdnf::sack::Query<Group> {
 public:
+    explicit GroupQuery(const GroupQuery & query);
     ~GroupQuery();
-
+    void foo();
     GroupQuery & ifilter_groupid(sack::QueryCmp cmp, const std::string & pattern);
     GroupQuery & ifilter_groupid(sack::QueryCmp cmp, const std::vector<std::string> & patterns);
     GroupQuery & ifilter_uservisible(bool value);
@@ -68,7 +69,9 @@ private:
     class Impl;
     std::unique_ptr<Impl> p_impl;
 
+    std::string debug_string;
     friend Group;
+    friend GroupSack;
 };
 
 

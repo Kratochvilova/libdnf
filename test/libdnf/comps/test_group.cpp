@@ -17,10 +17,10 @@ You should have received a copy of the GNU Lesser General Public License
 along with libdnf.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-/*
 #include "test_group.hpp"
 
 #include "libdnf/comps/comps.hpp"
+#include "libdnf/comps/group/query.hpp"
 
 extern "C" {
 #include <solv/repo.h>
@@ -33,7 +33,9 @@ extern "C" {
 CPPUNIT_TEST_SUITE_REGISTRATION(CompsGroupTest);
 
 
-void CompsGroupTest::setUp() {}
+void CompsGroupTest::setUp() {
+    base = std::make_unique<libdnf::Base>();
+}
 
 
 void CompsGroupTest::tearDown() {}
@@ -41,40 +43,50 @@ void CompsGroupTest::tearDown() {}
 
 void CompsGroupTest::test_load() {
     std::filesystem::path data_path = PROJECT_SOURCE_DIR "/test/libdnf/comps/data/";
+    const char * reponame = "repo";
 
-    libdnf::comps::Comps comps;
-    Repo * repo = repo_create(comps.get_pool(), "repo");
-    comps.load_from_file(data_path / "core.xml", repo);
+    libdnf::comps::Comps comps(*base.get());
+    comps.load_from_file(data_path / "core.xml", reponame);
+
     auto q_core = comps.get_group_sack().new_query();
+    
+    auto groups = q_core.list();
+    /*for (auto group : groups) {
+        group.get_groupid();
+    }
+    CPPUNIT_ASSERT_EQUAL(false, groups.empty());
     q_core.ifilter_installed(false);
-    q_core.ifilter_id(libdnf::sack::QueryCmp::EQ, "core");
-    auto core = q_core.get();
-    CPPUNIT_ASSERT_EQUAL(std::string("core"), core->get_id());
-    CPPUNIT_ASSERT_EQUAL(std::string("Core"), core->get_name());
-    CPPUNIT_ASSERT_EQUAL(std::string("Kern"), core->get_translated_name("de"));
-    CPPUNIT_ASSERT_EQUAL(std::string("Smallest possible installation"), core->get_description());
-    CPPUNIT_ASSERT_EQUAL(std::string("Kleinstmögliche Installation"), core->get_translated_description("de"));
-    CPPUNIT_ASSERT_EQUAL(std::string("1"), core->get_order());
-    CPPUNIT_ASSERT_EQUAL(std::string("it"), core->get_langonly());
-    CPPUNIT_ASSERT_EQUAL(false, core->get_uservisible());
-    CPPUNIT_ASSERT_EQUAL(false, core->get_default());
+    q_core.ifilter_groupid(libdnf::sack::QueryCmp::EQ, "core");
 
-    comps.load_from_file(data_path / "standard.xml", repo);
+    auto core = q_core.get();
+    CPPUNIT_ASSERT_EQUAL(std::string("core"), core.get_groupid());
+    CPPUNIT_ASSERT_EQUAL(std::string("Core"), core.get_name());
+    CPPUNIT_ASSERT_EQUAL(std::string("Kern"), core.get_translated_name("de"));
+    CPPUNIT_ASSERT_EQUAL(std::string("Smallest possible installation"), core.get_description());
+    CPPUNIT_ASSERT_EQUAL(std::string("Kleinstmögliche Installation"), core.get_translated_description("de"));
+    CPPUNIT_ASSERT_EQUAL(std::string("1"), core.get_order());
+    CPPUNIT_ASSERT_EQUAL(std::string("it"), core.get_langonly());
+    CPPUNIT_ASSERT_EQUAL(false, core.get_uservisible());
+    CPPUNIT_ASSERT_EQUAL(false, core.get_default());
+
+    comps.load_from_file(data_path / "standard.xml", reponame);
     auto q_standard = comps.get_group_sack().new_query();
     q_standard.ifilter_installed(false);
-    q_standard.ifilter_id(libdnf::sack::QueryCmp::EQ, "standard");
+    q_standard.ifilter_groupid(libdnf::sack::QueryCmp::EQ, "standard");
     auto standard = q_standard.get();
-    CPPUNIT_ASSERT_EQUAL(std::string("standard"), standard->get_id());
-    CPPUNIT_ASSERT_EQUAL(std::string("Standard"), standard->get_name());
-    CPPUNIT_ASSERT_EQUAL(std::string("標準"), standard->get_translated_name("ja"));
-    CPPUNIT_ASSERT_EQUAL(std::string("Common set of utilities that extend the minimal installation."), standard->get_description());
-    CPPUNIT_ASSERT_EQUAL(std::string("最小限のインストールを拡張するユーティリティの共通セット"), standard->get_translated_description("ja"));
-    CPPUNIT_ASSERT_EQUAL(std::string("1"), standard->get_order());
-    CPPUNIT_ASSERT_EQUAL(std::string(""), standard->get_langonly());
-    CPPUNIT_ASSERT_EQUAL(false, standard->get_uservisible());
-    CPPUNIT_ASSERT_EQUAL(false, standard->get_default());
+    CPPUNIT_ASSERT_EQUAL(std::string("standard"), standard.get_groupid());
+    CPPUNIT_ASSERT_EQUAL(std::string("Standard"), standard.get_name());
+    CPPUNIT_ASSERT_EQUAL(std::string("標準"), standard.get_translated_name("ja"));
+    CPPUNIT_ASSERT_EQUAL(std::string("Common set of utilities that extend the minimal installation."), standard.get_description());
+    CPPUNIT_ASSERT_EQUAL(std::string("最小限のインストールを拡張するユーティリティの共通セット"), standard.get_translated_description("ja"));
+    CPPUNIT_ASSERT_EQUAL(std::string("1"), standard.get_order());
+    CPPUNIT_ASSERT_EQUAL(std::string(""), standard.get_langonly());
+    CPPUNIT_ASSERT_EQUAL(false, standard.get_uservisible());
+    CPPUNIT_ASSERT_EQUAL(false, standard.get_default());*/
 }
 
+
+/*
 
 void CompsGroupTest::test_load_defaults() {
     std::filesystem::path data_path = PROJECT_SOURCE_DIR "/test/libdnf/comps/data/";
@@ -84,9 +96,9 @@ void CompsGroupTest::test_load_defaults() {
     comps.load_from_file(data_path / "core-empty.xml", repo);
     auto q_core_empty = comps.get_group_sack().new_query();
     q_core_empty.ifilter_installed(false);
-    q_core_empty.ifilter_id(libdnf::sack::QueryCmp::EQ, "core");
+    q_core_empty.ifilter_groupid(libdnf::sack::QueryCmp::EQ, "core");
     auto core_empty = q_core_empty.get();
-    CPPUNIT_ASSERT_EQUAL(std::string("core"), core_empty->get_id());
+    CPPUNIT_ASSERT_EQUAL(std::string("core"), core_empty->get_groupid());
     CPPUNIT_ASSERT_EQUAL(std::string(""), core_empty->get_name());
     CPPUNIT_ASSERT_EQUAL(std::string(""), core_empty->get_translated_name("ja"));
     CPPUNIT_ASSERT_EQUAL(std::string(""), core_empty->get_description());
@@ -111,9 +123,9 @@ void CompsGroupTest::test_merge() {
 
     auto q_core2 = comps.get_group_sack().new_query();
     q_core2.ifilter_installed(false);
-    q_core2.ifilter_id(libdnf::sack::QueryCmp::EQ, "core");
+    q_core2.ifilter_groupid(libdnf::sack::QueryCmp::EQ, "core");
     auto core2 = q_core2.get();
-    CPPUNIT_ASSERT_EQUAL(std::string("core"), core2->get_id());
+    CPPUNIT_ASSERT_EQUAL(std::string("core"), core2->get_groupid());
     CPPUNIT_ASSERT_EQUAL(std::string("Core v2"), core2->get_name());
     // When attributes are missing in core-v2.xml, original values are kept
     CPPUNIT_ASSERT_EQUAL(std::string("Kern v2"), core2->get_translated_name("de"));
@@ -140,9 +152,9 @@ void CompsGroupTest::test_merge_with_empty() {
 
     auto q_core_empty = comps.get_group_sack().new_query();
     q_core_empty.ifilter_installed(false);
-    q_core_empty.ifilter_id(libdnf::sack::QueryCmp::EQ, "core");
+    q_core_empty.ifilter_groupid(libdnf::sack::QueryCmp::EQ, "core");
     auto core_empty = q_core_empty.get();
-    CPPUNIT_ASSERT_EQUAL(std::string("core"), core_empty->get_id());
+    CPPUNIT_ASSERT_EQUAL(std::string("core"), core_empty->get_groupid());
     CPPUNIT_ASSERT_EQUAL(std::string("Core"), core_empty->get_name());
     // attributes are missing in core-empty.xml -> original values are kept
     CPPUNIT_ASSERT_EQUAL(std::string("Kern"), core_empty->get_translated_name("de"));
@@ -170,9 +182,9 @@ void CompsGroupTest::test_merge_empty_with_nonempty() {
 
     auto q_core = comps.get_group_sack().new_query();
     q_core.ifilter_installed(false);
-    q_core.ifilter_id(libdnf::sack::QueryCmp::EQ, "core");
+    q_core.ifilter_groupid(libdnf::sack::QueryCmp::EQ, "core");
     auto core = q_core.get();
-    CPPUNIT_ASSERT_EQUAL(std::string("core"), core->get_id());
+    CPPUNIT_ASSERT_EQUAL(std::string("core"), core->get_groupid());
     CPPUNIT_ASSERT_EQUAL(std::string("Core"), core->get_name());
     CPPUNIT_ASSERT_EQUAL(std::string("Kern"), core->get_translated_name("de"));
     CPPUNIT_ASSERT_EQUAL(std::string("Smallest possible installation"), core->get_description());

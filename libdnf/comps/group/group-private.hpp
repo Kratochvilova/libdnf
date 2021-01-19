@@ -20,19 +20,18 @@ along with libdnf.  If not, see <https://www.gnu.org/licenses/>.
 
 #ifndef LIBDNF_COMPS_GROUP_GROUP_PRIVATE_HPP
 #define LIBDNF_COMPS_GROUP_GROUP_PRIVATE_HPP
-/*
+
 
 #include <libdnf/comps/group/group.hpp>
-#include <libxml/tree.h>
 
 extern "C" {
 #include <solv/pool.h>
 }
-*/
+
 namespace libdnf::comps {
 
-
-//void load_group_from_solvable(Group & grp, Id solvable_id, Pool * pool);
+    
+void add_solvable_id(Group & group, Id solvable_id);
 
 
 }  // namespace libdnf::comps
