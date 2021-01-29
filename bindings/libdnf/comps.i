@@ -22,7 +22,7 @@
 
 #define CV __perl_CV
 
-// %template(SackQueryGroup) libdnf::sack::Query<libdnf::comps::Group>;
+%template(SackQueryGroup) libdnf::sack::Query<libdnf::comps::Group>;
 
 // %template(SackQueryGroupWeakPtr) libdnf::WeakPtr<GroupQuery, false>;
 // %template(SackQueryGroupWeakPtrSet) libdnf::Set<libdnf::comps::GroupQueryWeakPtr>;
